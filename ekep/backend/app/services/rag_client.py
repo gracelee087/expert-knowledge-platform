@@ -24,7 +24,7 @@ log = logging.getLogger("ekep.rag")
 TIMEOUT_NEXT_S = 90.0
 TIMEOUT_FACT_S = 120.0
 TIMEOUT_SEARCH_S = 20.0
-TIMEOUT_VIDEO_S = 600.0
+TIMEOUT_VIDEO_S = 900.0
 
 
 def enabled() -> bool:
@@ -89,8 +89,9 @@ async def approve_fact(fact_id: str, reviewer: str, resolution: str = "coexist")
 
 
 async def export_video(topic: str, department: str | None, lang: str | None = None,
-                       audience: str = "beginner") -> dict | None:
-    params: dict = {"topic": topic, "lang": lang or settings.rag_service_lang, "audience": audience}
+                       audience: str = "beginner", style: str = "motion") -> dict | None:
+    """style: 'motion' = HyperFrames motion graphics (~4-5 min), 'still' = one image per scene (~2-3 min)."""
+    params: dict = {"topic": topic, "lang": lang or settings.rag_service_lang, "audience": audience, "style": style}
     if department:
         params["department"] = department
     if not enabled():

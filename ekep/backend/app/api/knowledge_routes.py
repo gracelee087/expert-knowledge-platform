@@ -110,13 +110,13 @@ async def publish_to_knowledge_base(iv_id: str, db: Session = Depends(get_db), p
 
 
 @router.post("/interviews/{iv_id}/knowledge-base/video")
-async def generate_video(iv_id: str, db: Session = Depends(get_db), p: Principal = Depends(require(*STAFF))):
+async def generate_video(iv_id: str, style: str = "motion", db: Session = Depends(get_db), p: Principal = Depends(require(*STAFF))):
     iv = db.get(Interview, iv_id)
     if iv is None:
         raise HTTPException(404, "Interview nicht gefunden")
     if not rag_client.enabled():
         raise HTTPException(409, "RAG-Service nicht konfiguriert")
-    res = await rag_client.export_video(topic=iv.title, department=iv.employee.department, lang=settings.rag_service_lang)
+    res = await rag_client.export_video(topic=iv.title, department=iv.employee.department, lang=settings.rag_service_lang, style=style)
     if res is None:
         raise HTTPException(502, "Videoerstellung fehlgeschlagen")
     audit(db, p.user, p.role, "training.video_generated", "interview", iv_id, file=res.get("file"))

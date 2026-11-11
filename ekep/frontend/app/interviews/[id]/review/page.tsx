@@ -235,7 +235,7 @@ function KnowledgeBaseActions({ id, confirmedCount, onError }: { id: string; con
           {publishing ? <><Spinner /> Übernehme …</> : "Wissensbasis aktualisieren"}
         </button>
         <button className="btn-secondary" disabled={rendering || publishing} onClick={runVideo}>
-          {rendering ? <><Spinner /> Video wird erstellt (1–4 Min.) …</> : "Schulungsvideo erstellen"}
+          {rendering ? <><Spinner /> Video wird erstellt (ca. 4–6 Min., Motion-Graphics) …</> : "Schulungsvideo erstellen"}
         </button>
       </div>
 
