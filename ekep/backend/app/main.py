@@ -1,0 +1,38 @@
+"""Expert Knowledge Extraction Platform – API."""
+from __future__ import annotations
+
+import logging
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from .api.knowledge_routes import router as knowledge_router
+from .api.routes import export_router, router, ws_router
+from .config import settings
+from .db import init_db
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+
+app = FastAPI(
+    title="Expert Knowledge Extraction Platform",
+    version="0.1.0",
+    description="Phase 1 – Knowledge Acquisition. Export-Vertrag für das RAG-Team unter /api/v1/export.",
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.on_event("startup")
+def _startup() -> None:
+    init_db()
+
+
+app.include_router(router)
+app.include_router(export_router)
+app.include_router(ws_router)
+app.include_router(knowledge_router)

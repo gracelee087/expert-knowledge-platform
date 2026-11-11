@@ -1,0 +1,801 @@
+{
+  "$defs": {
+    "Confidence": {
+      "properties": {
+        "level": {
+          "enum": [
+            "niedrig",
+            "mittel",
+            "hoch"
+          ],
+          "title": "Level",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "semantics": {
+          "const": "statement_clarity_not_truth",
+          "default": "statement_clarity_not_truth",
+          "description": "Beschreibt Klarheit der Expertenaussage, NICHT fachliche Richtigkeit",
+          "title": "Semantics",
+          "type": "string"
+        }
+      },
+      "required": [
+        "level",
+        "reason"
+      ],
+      "title": "Confidence",
+      "type": "object"
+    },
+    "ContradictionExport": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "statement_a": {
+          "title": "Statement A",
+          "type": "string"
+        },
+        "statement_b": {
+          "title": "Statement B",
+          "type": "string"
+        },
+        "turn_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Turn Ids",
+          "type": "array"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "statement_a",
+        "statement_b",
+        "turn_ids",
+        "status"
+      ],
+      "title": "ContradictionExport",
+      "type": "object"
+    },
+    "ExpertRef": {
+      "properties": {
+        "employee_id": {
+          "title": "Employee Id",
+          "type": "string"
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Nur bei EXPORT_INCLUDE_EXPERT_NAME=true (Datenminimierung)",
+          "title": "Name"
+        },
+        "department": {
+          "title": "Department",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "expertise_area": {
+          "title": "Expertise Area",
+          "type": "string"
+        }
+      },
+      "required": [
+        "employee_id",
+        "name",
+        "department",
+        "role",
+        "expertise_area"
+      ],
+      "title": "ExpertRef",
+      "type": "object"
+    },
+    "KnowledgeUnitExport": {
+      "properties": {
+        "knowledge_id": {
+          "title": "Knowledge Id",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "integer"
+        },
+        "topic": {
+          "title": "Topic",
+          "type": "string"
+        },
+        "topic_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Topic Id"
+        },
+        "category": {
+          "enum": [
+            "fachwissen",
+            "prozesswissen",
+            "entscheidungswissen",
+            "erfahrungswissen",
+            "kontextwissen"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "prerequisites": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Prerequisites",
+          "type": "array"
+        },
+        "process_steps": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Process Steps",
+          "type": "array"
+        },
+        "decision_logic": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Decision Logic"
+        },
+        "exceptions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Exceptions",
+          "type": "array"
+        },
+        "examples": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Examples",
+          "type": "array"
+        },
+        "risks": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Risks",
+          "type": "array"
+        },
+        "dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Dependencies",
+          "type": "array"
+        },
+        "escalation_paths": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Escalation Paths",
+          "type": "array"
+        },
+        "common_mistakes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Common Mistakes",
+          "type": "array"
+        },
+        "temporal_validity": {
+          "$ref": "#/$defs/TemporalValidity"
+        },
+        "confidence": {
+          "$ref": "#/$defs/Confidence"
+        },
+        "uncertainties": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Uncertainties",
+          "type": "array"
+        },
+        "review": {
+          "$ref": "#/$defs/Review"
+        },
+        "provenance": {
+          "$ref": "#/$defs/Provenance"
+        },
+        "vector_sync": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VectorSync"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Seit 1.1.0; null = noch kein Abgleich erfolgt"
+        }
+      },
+      "required": [
+        "knowledge_id",
+        "version",
+        "topic",
+        "topic_id",
+        "category",
+        "title",
+        "content",
+        "explanation",
+        "prerequisites",
+        "process_steps",
+        "decision_logic",
+        "exceptions",
+        "examples",
+        "risks",
+        "dependencies",
+        "escalation_paths",
+        "common_mistakes",
+        "temporal_validity",
+        "confidence",
+        "uncertainties",
+        "review",
+        "provenance"
+      ],
+      "title": "KnowledgeUnitExport",
+      "type": "object"
+    },
+    "OpenItem": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "topic_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Topic Id"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "topic_id",
+        "description"
+      ],
+      "title": "OpenItem",
+      "type": "object"
+    },
+    "Provenance": {
+      "properties": {
+        "source_refs": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Source Refs",
+          "type": "array"
+        },
+        "original_extraction": {
+          "additionalProperties": true,
+          "description": "Unveränderte KI-Erstextraktion",
+          "title": "Original Extraction",
+          "type": "object"
+        },
+        "revisions": {
+          "items": {
+            "$ref": "#/$defs/Revision"
+          },
+          "title": "Revisions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "source_refs",
+        "original_extraction",
+        "revisions"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "Review": {
+      "properties": {
+        "status": {
+          "enum": [
+            "extracted",
+            "confirmed",
+            "corrected",
+            "uncertain",
+            "rejected"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "expert_confirmed": {
+          "title": "Expert Confirmed",
+          "type": "boolean"
+        },
+        "reviewed_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reviewed By"
+        },
+        "reviewed_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reviewed At"
+        },
+        "expert_notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Expert Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status",
+        "expert_confirmed",
+        "reviewed_by",
+        "reviewed_at",
+        "expert_notes"
+      ],
+      "title": "Review",
+      "type": "object"
+    },
+    "Revision": {
+      "properties": {
+        "version": {
+          "title": "Version",
+          "type": "integer"
+        },
+        "action": {
+          "title": "Action",
+          "type": "string"
+        },
+        "actor": {
+          "title": "Actor",
+          "type": "string"
+        },
+        "at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "At"
+        },
+        "comment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Comment"
+        }
+      },
+      "required": [
+        "version",
+        "action",
+        "actor",
+        "at",
+        "comment"
+      ],
+      "title": "Revision",
+      "type": "object"
+    },
+    "SourceInfo": {
+      "properties": {
+        "system": {
+          "title": "System",
+          "type": "string"
+        },
+        "interview_id": {
+          "title": "Interview Id",
+          "type": "string"
+        },
+        "interview_title": {
+          "title": "Interview Title",
+          "type": "string"
+        },
+        "interview_goal": {
+          "title": "Interview Goal",
+          "type": "string"
+        },
+        "started_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Started At"
+        },
+        "completed_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Completed At"
+        },
+        "consent_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Consent Version"
+        }
+      },
+      "required": [
+        "system",
+        "interview_id",
+        "interview_title",
+        "interview_goal",
+        "started_at",
+        "completed_at",
+        "consent_version"
+      ],
+      "title": "SourceInfo",
+      "type": "object"
+    },
+    "SourceRef": {
+      "properties": {
+        "turn_id": {
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "quote": {
+          "description": "Wörtliches Zitat aus dem Transkript",
+          "title": "Quote",
+          "type": "string"
+        },
+        "transcript_offset_start_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sekunden seit Interviewbeginn (aktive Zeit)",
+          "title": "Transcript Offset Start S"
+        },
+        "transcript_offset_end_s": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Transcript Offset End S"
+        },
+        "verified": {
+          "description": "Zitat wurde deterministisch im Transkript wiedergefunden",
+          "title": "Verified",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "turn_id",
+        "quote",
+        "transcript_offset_start_s",
+        "transcript_offset_end_s",
+        "verified"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    },
+    "TemporalValidity": {
+      "properties": {
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Note"
+        },
+        "historical_changes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Historical Changes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "note",
+        "historical_changes"
+      ],
+      "title": "TemporalValidity",
+      "type": "object"
+    },
+    "TranscriptTurn": {
+      "properties": {
+        "turn_id": {
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "seq": {
+          "title": "Seq",
+          "type": "integer"
+        },
+        "speaker": {
+          "enum": [
+            "ai",
+            "expert"
+          ],
+          "title": "Speaker",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "t_start_s": {
+          "title": "T Start S",
+          "type": "number"
+        },
+        "t_end_s": {
+          "title": "T End S",
+          "type": "number"
+        }
+      },
+      "required": [
+        "turn_id",
+        "seq",
+        "speaker",
+        "text",
+        "t_start_s",
+        "t_end_s"
+      ],
+      "title": "TranscriptTurn",
+      "type": "object"
+    },
+    "VectorSync": {
+      "description": "Empfehlung für die Vektordatenbank aus dem Abgleich mit der bestehenden Wissensbasis.",
+      "properties": {
+        "relation": {
+          "enum": [
+            "neu",
+            "ergaenzung",
+            "bestaetigung",
+            "widerspruch"
+          ],
+          "title": "Relation",
+          "type": "string"
+        },
+        "action": {
+          "description": "create = neuen Eintrag anlegen; update = target_id ergänzen/anpassen; none = bereits vorhanden; review = Widerspruch, fachliche Klärung vor Übernahme",
+          "enum": [
+            "create",
+            "update",
+            "none",
+            "review"
+          ],
+          "title": "Action",
+          "type": "string"
+        },
+        "target_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "ID des bestehenden Eintrags in der Wissensbasis",
+          "title": "Target Id"
+        },
+        "target_title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Target Title"
+        },
+        "similarity": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Similarity"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "method": {
+          "description": "llm | heuristic | no_match",
+          "title": "Method",
+          "type": "string"
+        }
+      },
+      "required": [
+        "relation",
+        "action",
+        "target_id",
+        "target_title",
+        "similarity",
+        "explanation",
+        "method"
+      ],
+      "title": "VectorSync",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "schema": {
+      "const": "ekep.knowledge-export",
+      "default": "ekep.knowledge-export",
+      "title": "Schema",
+      "type": "string"
+    },
+    "schema_version": {
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "export_id": {
+      "title": "Export Id",
+      "type": "string"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/SourceInfo"
+    },
+    "expert": {
+      "$ref": "#/$defs/ExpertRef"
+    },
+    "filter": {
+      "additionalProperties": true,
+      "description": "Angewandte Exportfilter",
+      "title": "Filter",
+      "type": "object"
+    },
+    "knowledge_units": {
+      "items": {
+        "$ref": "#/$defs/KnowledgeUnitExport"
+      },
+      "title": "Knowledge Units",
+      "type": "array"
+    },
+    "open_questions": {
+      "items": {
+        "$ref": "#/$defs/OpenItem"
+      },
+      "title": "Open Questions",
+      "type": "array"
+    },
+    "contradictions": {
+      "items": {
+        "$ref": "#/$defs/ContradictionExport"
+      },
+      "title": "Contradictions",
+      "type": "array"
+    },
+    "transcript": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/TranscriptTurn"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Transcript"
+    }
+  },
+  "required": [
+    "schema_version",
+    "export_id",
+    "generated_at",
+    "source",
+    "expert",
+    "filter",
+    "knowledge_units",
+    "open_questions",
+    "contradictions",
+    "transcript"
+  ],
+  "title": "ekep.knowledge-export v1.1.0",
+  "type": "object",
+  "$id": "urn:helaba:lbs:ekep.knowledge-export:1.1.0"
+}

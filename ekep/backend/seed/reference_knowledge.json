@@ -1,0 +1,33 @@
+{
+  "_hinweis": "FIKTIVER Demo-Referenzbestand. Platzhalter für die Vektordatenbank (Phase 2), bis diese angebunden ist. Inhalte sind erfunden und keine echten LBS-Regelungen.",
+  "documents": [
+    {"id": "KB-0001", "title": "Erkennung historischer Tarifgenerationen", "source": "Arbeitsanweisung Bestand AA-B-12 (fiktiv)", "valid_from": "2019-01-01",
+     "content": "Die Tarifgeneration eines Bausparvertrags wird über das Tarifkennzeichen im Bestandssystem bestimmt. Fehlt das Kennzeichen, ist das Abschlussdatum maßgeblich; bei Unklarheit wird die Fachabteilung Tarifwesen eingebunden."},
+    {"id": "KB-0002", "title": "Mindestbewertungszahl und Zuteilung", "source": "Fachkonzept Zuteilung v3 (fiktiv)", "valid_from": "2021-04-01",
+     "content": "Die Zuteilung eines Bausparvertrags setzt das Erreichen der tariflichen Mindestbewertungszahl, die Mindestsparzeit und das Mindestsparguthaben voraus. Ältere Tarifgenerationen können abweichende Mindestbewertungszahlen haben."},
+    {"id": "KB-0003", "title": "Regelsparbeitrag und Sparrückstände", "source": "Handbuch Kundenservice Kap. 4 (fiktiv)", "valid_from": "2020-07-01",
+     "content": "Der Regelsparbeitrag ist monatlich zu leisten. Bei Sparrückständen wird der Kunde schriftlich informiert; nach drei offenen Raten erfolgt eine Prüfung durch den Bestandsservice."},
+    {"id": "KB-0004", "title": "Wohnungsbauprämie – Antragsprüfung", "source": "Arbeitsanweisung Förderung AA-F-03 (fiktiv)", "valid_from": "2021-01-01",
+     "content": "Für die Wohnungsbauprämie werden Einkommensgrenzen und die wohnungswirtschaftliche Verwendung geprüft. Der Antrag wird jährlich über das Fördermodul gestellt; fehlende Nachweise werden beim Kunden angefordert."},
+    {"id": "KB-0005", "title": "Vor- und Zwischenfinanzierung", "source": "Kreditrichtlinie Baufinanzierung 2.1 (fiktiv)", "valid_from": "2022-03-01",
+     "content": "Ist ein Bausparvertrag noch nicht zuteilungsreif, kann eine Zwischenfinanzierung gewährt werden. Voraussetzung sind eine positive Bonitätsprüfung, ein Mindestguthaben und die Abtretung des Bausparvertrags."},
+    {"id": "KB-0006", "title": "Tarifwechsel bei Bestandsverträgen", "source": "Arbeitsanweisung Bestand AA-B-07 (fiktiv)", "valid_from": "2018-05-01",
+     "content": "Ein Tarifwechsel ist nur innerhalb zulässiger Tarifkombinationen möglich und wird durch den Bestandsservice nach Vier-Augen-Prinzip freigegeben. Altverträge vor 2005 erfordern eine Einzelfallprüfung."},
+    {"id": "KB-0007", "title": "Kündigung und Auszahlung des Guthabens", "source": "Handbuch Kundenservice Kap. 7 (fiktiv)", "valid_from": "2020-07-01",
+     "content": "Bei Kündigung eines Bausparvertrags wird das Guthaben nach Ablauf der Kündigungsfrist ausgezahlt. Bei abgetretenen Verträgen ist die Zustimmung des Abtretungsempfängers erforderlich."},
+    {"id": "KB-0008", "title": "Darlehensauszahlung nach Zuteilung", "source": "Kreditrichtlinie Baufinanzierung 2.1 (fiktiv)", "valid_from": "2022-03-01",
+     "content": "Das Bauspardarlehen wird nach Zuteilung, Vorlage der Verwendungsnachweise und Bestellung der Sicherheiten ausgezahlt. Teilauszahlungen erfolgen nach Baufortschritt."},
+    {"id": "KB-0009", "title": "Eskalation bei unklaren Vertragsdaten", "source": "Prozesshandbuch Bestand P-11 (fiktiv)", "valid_from": "2023-01-01",
+     "content": "Sind Vertragsdaten widersprüchlich oder unvollständig, wird der Fall im Ticketsystem an die Fachabteilung Tarifwesen eskaliert. Die Bearbeitung ruht bis zur Klärung; der Kunde erhält eine Zwischennachricht."},
+    {"id": "KB-0010", "title": "Onboarding-Prozess neuer Mitarbeitender (HR)", "source": "HR-Prozessbeschreibung HR-02 (fiktiv)", "valid_from": "2024-01-01",
+     "content": "Neue Mitarbeitende durchlaufen ein dreistufiges Onboarding: Einführungstag, fachliche Einarbeitung mit Paten und eine Abschlussreflexion nach drei Monaten. Die Koordination liegt bei HR, die fachliche Einarbeitung bei der Abteilung."},
+    {"id": "KB-0011", "title": "Budgetfreigabe für Abteilungsprojekte", "source": "Finanzrichtlinie FR-05 (fiktiv)", "valid_from": "2023-07-01",
+     "content": "Abteilungsbudgets werden jährlich geplant. Zusätzliche Mittel über 10.000 Euro erfordern einen Antrag mit Business Case und die Freigabe durch den Bereichsleiter und das Controlling."},
+    {"id": "KB-0012", "title": "Beratungsdokumentation in der Kundenberatung", "source": "Beratungsleitfaden BL-01 (fiktiv)", "valid_from": "2022-01-01",
+     "content": "Jede Bausparberatung wird im Beratungsprotokoll dokumentiert, inklusive Sparziel, Tarifempfehlung und Begründung. Abweichungen vom empfohlenen Tarif sind zu begründen."},
+    {"id": "KB-0013", "title": "Umgang mit Altverträgen vor 2005", "source": "Arbeitsanweisung Bestand AA-B-15 (fiktiv)", "valid_from": "2017-01-01", "valid_until": "2024-12-31",
+     "content": "Altverträge vor 2005 werden manuell im Altbestandsmodul geprüft. Die Zinsberechnung folgt den historischen Tarifbedingungen, die im Archiv hinterlegt sind."},
+    {"id": "KB-0014", "title": "Datenschutz bei Kundendaten in internen Abstimmungen", "source": "Datenschutzrichtlinie DS-03 (fiktiv)", "valid_from": "2023-05-01",
+     "content": "In internen Abstimmungen und Schulungsunterlagen dürfen keine personenbezogenen Kundendaten verwendet werden. Beispiele sind zu anonymisieren."}
+  ]
+}
