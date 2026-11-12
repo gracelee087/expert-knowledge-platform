@@ -303,15 +303,22 @@ class _PodcastLLM(BaseModel):
 
 class _GenerateLLM(BaseModel):
     learning_goals: list[str] = Field(description="3-5 Lernziele auf Deutsch")
-    quiz: list[_QuizLLM] = Field(description="4-6 Multiple-Choice-Fragen")
+    quiz: list[_QuizLLM] = Field(description="Multiple-Choice-Fragen; Anzahl siehe ANZAHL QUIZFRAGEN (Standard 4-6)")
     podcast: list[_PodcastLLM] = Field(description="6-10 Dialogzeilen, abwechselnd Anna und Klaus, Anna beginnt")
+
+
+class _GenerateQuizLLM(_GenerateLLM):
+    """Quiz Generator: das Modell ignoriert eine Anzahl im Fließtext – daher explizit im Schema."""
+    quiz: list[_QuizLLM] = Field(description="GENAU 20 Multiple-Choice-Fragen (nicht weniger): Mischung aus "
+                                             "Verständnis-, Anwendungs- und Fallfragen, jede mit genau 4 Optionen")
 
 
 GENERATE_SYSTEM = """Du erstellst Schulungsmaterial für Mitarbeitende einer Bausparkasse. Sprache: Deutsch.
 Du erhältst einen Schulungsentwurf (Abschnitte mit Kernpunkten und Sprechertext), Zielgruppe und Schwierigkeitsgrad.
 Erzeuge in EINEM Durchgang:
 1. learning_goals: 3-5 Lernziele (nur falls im Entwurf keine stehen; sonst die vorhandenen leicht sprachlich glätten).
-2. quiz: 4-6 Multiple-Choice-Fragen mit genau 4 Optionen, correctIndex 0-3 (richtige Antwort nicht immer an Position 0),
+2. quiz: Multiple-Choice-Fragen (Anzahl: siehe ANZAHL QUIZFRAGEN in der Anfrage, sonst 4-6) mit genau 4 Optionen,
+   correctIndex 0-3 (richtige Antwort nicht immer an Position 0),
    explanation = 1-2 Sätze mit Bezug auf den Abschnitt. Nutze die Quiz-Ideen, wenn vorhanden. Nur Inhalte aus dem Entwurf.
 3. podcast: kurzer Dialog mit 6-10 Zeilen. Anna moderiert (stellt Fragen, fasst zusammen), Klaus ist der Experte
    (erklärt die Inhalte). Anna beginnt, Anna schließt. Jede Zeile 1-3 Sätze, gesprochene Sprache.
@@ -457,19 +464,31 @@ async def content_generate(req: GenerateRequest) -> GeneratedContent:
     if sections:
         user = (f"ZIELGRUPPE: {req.audience} | SCHWIERIGKEIT: {req.difficulty} | FORMAT: {req.format}\n"
                 f"ROLLEN: {', '.join(req.targetRoles) or '-'}\n\n{_outline_block(title, sections, goals, quiz_seeds)}")
+        is_quiz = req.format == "quiz"
+        system = GENERATE_SYSTEM
+        schema: type[_GenerateLLM] = _GenerateLLM
+        if is_quiz:
+            user = "ANZAHL QUIZFRAGEN: GENAU 20 (Mischung aus Verständnis-, Anwendungs- und Fallfragen)\n" + user
+            system = GENERATE_SYSTEM.replace(
+                "2. quiz: Multiple-Choice-Fragen (Anzahl: siehe ANZAHL QUIZFRAGEN in der Anfrage, sonst 4-6) mit genau 4 Optionen,",
+                "2. quiz: GENAU 20 Multiple-Choice-Fragen (nicht weniger – zähle sie) mit genau 4 Optionen,")
+            schema = _GenerateQuizLLM
+        min_quiz = 10 if is_quiz else 4
         for attempt in range(2):
             try:
-                llm = await get_llm().structured(system=GENERATE_SYSTEM, user=user, schema=_GenerateLLM,
+                llm = await get_llm().structured(system=system, user=user, schema=schema,
                                                  model=settings.analyst_model, temperature=0.4)
             except Exception as e:
                 log.warning("content/generate LLM fehlgeschlagen: %s", str(e)[:300])
                 break
-            quiz, podcast = _normalize_quiz(llm.quiz)[:6], _normalize_podcast(llm.podcast)[:10]
+            quiz = _normalize_quiz(llm.quiz)[:20 if is_quiz else 6]
+            podcast = _normalize_podcast(llm.podcast)[:10]
             if not goals:
                 goals = [g.strip() for g in llm.learning_goals if g.strip()][:5]
-            if len(quiz) >= 4:
+            if len(quiz) >= min_quiz:
                 break
-            user += "\n\nHINWEIS: Es werden mindestens 4 Quizfragen benötigt."
+            user += (f"\n\nHINWEIS: Es wurden nur {len(quiz)} Quizfragen geliefert – es werden "
+                     f"{'GENAU 20' if is_quiz else 'mindestens 4'} Quizfragen benötigt.")
 
     return GeneratedContent(
         id=f"gc-{uuid.uuid4().hex[:8]}",
