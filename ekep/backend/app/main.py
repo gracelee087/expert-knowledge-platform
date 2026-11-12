@@ -6,6 +6,8 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from .api.dashboard_interview import router as dashboard_interview_router
+from .api.dashboard_content import router as dashboard_content_router
 from .api.knowledge_routes import router as knowledge_router
 from .api.routes import export_router, router, ws_router
 from .config import settings
@@ -32,6 +34,8 @@ def _startup() -> None:
     init_db()
 
 
+app.include_router(dashboard_interview_router)  # teammate dashboard contract; before /api/interviews/{iv_id}
+app.include_router(dashboard_content_router)
 app.include_router(router)
 app.include_router(export_router)
 app.include_router(ws_router)
