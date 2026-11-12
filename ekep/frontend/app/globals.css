@@ -1,29 +1,37 @@
 @import "tailwindcss";
 
+/* Design-Tokens angeglichen an das Helaba Knowledge Intelligence Dashboard (Inter, Helaba-Rot, Navy, Apple-Grau) */
 @theme {
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --color-ink: #1d1d1f;
   --color-ink-2: #6e6e73;
-  --color-ink-3: #a1a1a6;
+  --color-ink-3: #8e8e93;
   --color-canvas: #f5f5f7;
-  --color-line: #e5e5ea;
-  --color-brand: #e2001a;
-  --color-brand-soft: #fde8ea;
-  --color-accent: #0071e3;
+  --color-line: #e8e8ed;
+  --color-brand: #e30613;
+  --color-brand-600: #c4040f;
+  --color-brand-soft: #ffe3e4;
+  --color-accent: #0a6cff;
+  --color-navy: #0a1a2f;
+  --color-navy-700: #173a5e;
+  --color-navy-800: #0f2742;
+  --color-navy-100: #e6edf5;
+  --color-navy-50: #f2f6fa;
+  --shadow-card: 0 0 0 0.5px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03), 0 8px 28px -14px rgba(10, 26, 47, 0.14);
 }
 
 html, body { background: var(--color-canvas); color: var(--color-ink); }
-body { -webkit-font-smoothing: antialiased; }
+body { -webkit-font-smoothing: antialiased; letter-spacing: -0.01em; }
 
-@utility card { @apply bg-white rounded-2xl border border-line/70 shadow-[0_1px_2px_rgba(0,0,0,0.03)]; }
-@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition disabled:opacity-40 disabled:cursor-not-allowed; }
-@utility btn-primary { @apply btn bg-ink text-white hover:bg-black; }
-@utility btn-secondary { @apply btn bg-white text-ink border border-line hover:bg-canvas; }
-@utility btn-ghost { @apply btn text-ink-2 hover:text-ink hover:bg-canvas; }
-@utility btn-brand { @apply btn bg-brand text-white hover:opacity-90; }
-@utility input { @apply w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-ink-3 focus:ring-4 focus:ring-black/5; }
+@utility card { @apply bg-white rounded-[22px] border border-black/[0.05] shadow-card; }
+@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium tracking-[-0.01em] transition-all duration-200 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed; }
+@utility btn-primary { @apply btn bg-navy text-white shadow-[0_1px_2px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.08)] hover:bg-navy-700; }
+@utility btn-secondary { @apply btn bg-white/80 text-ink border border-black/[0.08] backdrop-blur hover:bg-white hover:border-black/[0.14]; }
+@utility btn-ghost { @apply btn text-ink hover:bg-black/[0.05]; }
+@utility btn-brand { @apply btn bg-brand text-white shadow-[0_6px_20px_-8px_rgba(227,6,19,0.6)] hover:bg-brand-600; }
+@utility input { @apply w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-ink-3 focus:ring-4 focus:ring-accent/15; }
 @utility label { @apply block text-xs font-medium text-ink-2 mb-1; }
-@utility eyebrow { @apply text-[11px] font-semibold uppercase tracking-wider text-ink-3; }
+@utility eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-3; }
 
 @keyframes pulse-ring { 0% { transform: scale(1); opacity: .5 } 100% { transform: scale(1.6); opacity: 0 } }
 @utility pulse-ring { animation: pulse-ring 1.6s ease-out infinite; }

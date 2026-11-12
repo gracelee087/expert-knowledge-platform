@@ -15,13 +15,18 @@ const ROLE_LABEL: Record<Role, string> = { admin: "Administrator", interviewer: 
 export default function Shell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const [role, setRole] = useState<Role>("admin");
-  useEffect(() => setRole(getIdentity().role), []);
+  // Eingebettet im Helaba-Dashboard (iframe): Branding ausblenden, nur schlanke Tabs zeigen
+  const [embedded, setEmbedded] = useState(false);
+  useEffect(() => {
+    setRole(getIdentity().role);
+    setEmbedded(typeof window !== "undefined" && window.self !== window.top);
+  }, []);
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-30 border-b border-line/70 bg-white/80 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-7xl items-center gap-8 px-6">
-          <Link href="/" className="flex items-center gap-2">
+      <header className={`sticky top-0 z-30 border-b border-black/[0.05] ${embedded ? "bg-canvas/95" : "bg-white/80"} backdrop-blur-xl`}>
+        <div className={`mx-auto flex max-w-7xl items-center gap-8 px-6 ${embedded ? "h-12" : "h-14"}`}>
+          <Link href="/" className={`flex items-center gap-2 ${embedded ? "hidden" : ""}`}>
             <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-[11px] font-bold text-white">EK</span>
             <span className="text-sm font-semibold tracking-tight">Expert Knowledge</span>
             <span className="hidden text-sm text-ink-3 sm:inline">· LBS Hessen-Thüringen</span>
@@ -31,7 +36,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
               const active = n.href === "/" ? path === "/" : path.startsWith(n.href);
               return (
                 <Link key={n.href} href={n.href}
-                  className={`rounded-full px-3 py-1.5 text-sm ${active ? "bg-canvas font-medium text-ink" : "text-ink-2 hover:text-ink"}`}>
+                  className={`rounded-full px-3.5 py-1.5 text-sm transition-colors ${active ? (embedded ? "bg-white font-medium text-ink shadow-[0_1px_2px_rgba(0,0,0,0.06)]" : "bg-canvas font-medium text-ink") : "text-ink-2 hover:text-ink"}`}>
                   {n.label}
                 </Link>
               );
@@ -56,7 +61,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </header>
-      <main className="mx-auto max-w-7xl px-6 py-10">{children}</main>
+      <main className={`mx-auto max-w-7xl px-6 ${embedded ? "py-6" : "py-10"}`}>{children}</main>
     </div>
   );
 }

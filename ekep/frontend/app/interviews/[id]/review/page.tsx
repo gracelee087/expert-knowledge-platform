@@ -415,7 +415,23 @@ function TrainingView({ t }: { t: TrainingPackage }) {
           <div className="card mt-4 p-5"><div className="eyebrow mb-1">Sprechertext</div><p className="text-sm leading-relaxed text-ink-2">{s.speaker_notes}</p></div>
         </div>
         <div className="card p-6 lg:col-span-2">
-          <h3 className="mb-4 font-semibold">Wissenscheck</h3>
+          <h3 className="mb-1 font-semibold">Wissenscheck</h3>
+          {(() => {
+            const total = c.quiz.length;
+            const answered = Object.keys(answers).length;
+            const correct = c.quiz.filter((q, qi) => answers[qi] === q.correct_index).length;
+            const pct = total ? Math.round((correct / total) * 100) : 0;
+            return (
+              <div className="mb-4 rounded-xl border border-line bg-canvas px-3 py-2 text-xs text-ink-2">
+                <div className="flex items-center justify-between">
+                  <span>{answered} / {total} beantwortet · <span className="font-medium text-ink">{correct} richtig</span>{answered > 0 && <span> · {answered - correct} falsch</span>}</span>
+                  <span className={`font-semibold ${answered === total ? (pct >= 70 ? "text-emerald-600" : "text-brand") : "text-ink-3"}`}>{answered === total ? `Ergebnis: ${pct} %` : `${pct} %`}</span>
+                </div>
+                <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-line"><div className="h-full rounded-full bg-ink transition-all" style={{ width: `${total ? (answered / total) * 100 : 0}%` }} /></div>
+                {answered === total && total > 0 && <p className="mt-1.5">{pct >= 70 ? "Bestanden – gut gemacht." : "Noch nicht bestanden: Folien und Erklärungen zu den falschen Antworten erneut durchgehen."}</p>}
+              </div>
+            );
+          })()}
           <ol className="space-y-5">
             {c.quiz.map((q, qi) => (
               <li key={qi}>

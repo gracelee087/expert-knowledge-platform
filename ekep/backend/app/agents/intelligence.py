@@ -276,7 +276,7 @@ async def summarize(interview, units, gaps, contradictions) -> InterviewSummary:
 TRAINING_SYSTEM = """Du erstellst aus expertenbestätigten Wissenseinheiten einer Bausparkasse ein kompaktes
 Trainingspaket (Folien, Sprechertext, Quiz). Verwende AUSSCHLIESSLICH die gelieferten Wissenseinheiten – keine
 zusätzlichen Fakten. Jede Folie und jede Quizfrage referenziert die genutzten Einheiten über source_unit_ids.
-Passe Tiefe und Sprache an die Zielgruppe an. 5-8 Folien, 4-6 Quizfragen mit je 3-4 Optionen und genau einer
+Passe Tiefe und Sprache an die Zielgruppe an. 5-8 Folien, GENAU 20 Quizfragen (Mischung aus Verständnis-, Anwendungs- und Fallfragen, jede mit kurzer Erklärung der richtigen Antwort im Feld explanation, falls vorhanden) mit je 3-4 Optionen und genau einer
 richtigen Antwort (correct_index, 0-basiert). Sprechertext gut vorlesbar. Deutsch."""
 
 
